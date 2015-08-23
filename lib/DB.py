@@ -25,3 +25,8 @@ class DB:
     def query(self, query, values=None):
         res = self.cursor.execute(query, values)
         return self.cursor.fetchall()
+
+    def query_one(self, query, value=None):
+        self.cursor.execute(query, (value,))
+        res = self.cursor.fetchone()
+        return res[0] if res is not None else None
