@@ -1,8 +1,3 @@
-from lib.DB import DB
-import numpy as np
-import csv
-import argparse
-
 """
 This program will help determine player types. Different player types are better
 for different types of games, ex: in general you want more consistent players
@@ -13,6 +8,12 @@ Run this program in mode 'print' or 'csv' to either print the results from the
 console or write them to a csv file.
 """
 
+from lib.DB import DB
+import numpy as np
+import csv
+import argparse
+import lib.player_buckets as player_buckets
+
 
 def get_args():
     opt = argparse.ArgumentParser(prog='player_scores')
@@ -20,8 +21,14 @@ def get_args():
     opt.add_argument("-m", "--mode",
                      type=str,
                      required=True,
-                     choices=['csv', 'print'],
+                     choices=['csv', 'print', 'plot'],
                      help='Prints or writes csv file for data on the player scores.')
+
+    opt.add_argument("-i", "--ids",
+                     type=int,
+                     nargs='+',
+                     help="""Enter player ids to plot point distributions for.
+                     Format = ints separated by spaces.""")
 
     return opt.parse_args()
 
@@ -37,10 +44,12 @@ def get_data():
         q = "SELECT dk_pts FROM rguru_hitters WHERE id=%s"
         scores = [float(x[0]) for x in database.query(q, (str(id_),)) if x[0] is not None]
         # dont count if not enough sample size.
-        if len(scores) < 30: continue
+        if len(scores) < 30:
+            continue
         mean = np.mean(scores)
         # only look at players w/ avg score > 4
-        if mean < 4: continue
+        if mean < 4:
+            continue
         stdev = np.std(scores)
         results.append((
             fname,
@@ -89,6 +98,11 @@ def main():
         print_table(results, headers)
     elif args.mode == 'csv':
         write_csv(results, headers)
+    elif args.mode == 'plot':
+        if hasattr(args, 'ids'):
+            player_buckets.make_plots(args.ids)
+        else:
+            print 'No player ids entered. Enter player ids (ints separated by spaces) following -i arg.'
     else:
         return
 
