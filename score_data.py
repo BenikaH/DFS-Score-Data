@@ -100,7 +100,7 @@ def main():
         write_csv(results, headers)
     elif args.mode == 'plot':
         if hasattr(args, 'ids'):
-            player_histogram.make_plots(args.ids)
+            player_histogram.MakePlots(args.ids)
         else:
             print 'No player ids entered. Enter player ids (ints separated by spaces) following -i arg.'
     else:
