@@ -8,11 +8,11 @@ Run this program in mode 'print' or 'csv' to either print the results from the
 console or write them to a csv file.
 """
 
-from lib.DB import DB
-import numpy as np
 import csv
 import argparse
-import lib.player_buckets as player_buckets
+import numpy as np
+from lib.DB import DB
+import studies.player_histogram as player_histogram
 
 
 def get_args():
@@ -100,7 +100,7 @@ def main():
         write_csv(results, headers)
     elif args.mode == 'plot':
         if hasattr(args, 'ids'):
-            player_buckets.make_plots(args.ids)
+            player_histogram.make_plots(args.ids)
         else:
             print 'No player ids entered. Enter player ids (ints separated by spaces) following -i arg.'
     else:

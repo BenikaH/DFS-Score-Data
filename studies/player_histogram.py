@@ -1,9 +1,9 @@
 from lib.DB import DB
 from matplotlib import pyplot as plt
-import get_player
+import lib.get_player as get_player
 
 
-class GetBuckets:
+class GetHist:
     def __init__(self, player_id, site='dk'):
         self.db = DB()
         self.id_ = player_id
@@ -32,7 +32,7 @@ class GetBuckets:
 
 def make_plots(ids):
     for id_ in ids:
-        player_data = GetBuckets(id_)
+        player_data = GetHist(id_)
         if len(player_data.points) == 0:
             name = get_player.name_from_id(999)
             if name is None:
