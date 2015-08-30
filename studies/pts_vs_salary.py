@@ -10,7 +10,7 @@ and his points obtained.  I think it can be used to:
         close to the trend line, showing that DraftKings has their players
         priced pretty accurately.
         Note: The two outliers at the end of the avg points plot are likely so
-        far off due to a small sample size of players at that salary.  
+        far off due to a small sample size of players at that salary.
 """
 
 from lib.DB import DB
