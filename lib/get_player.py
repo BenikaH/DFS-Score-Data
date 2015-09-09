@@ -6,7 +6,7 @@ Gets the player id given the name, or name given the id
 
 
 def get_table_name(pos):
-    if (pos is not None) and (pos.lower in ['p', 'pitcher']):
+    if (pos is not None) and (pos.lower() in ['p', 'pitcher']):
         return 'rguru_pitchers'
     else:
         return 'rguru_hitters'
